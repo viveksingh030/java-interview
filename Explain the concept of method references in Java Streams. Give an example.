@@ -1,0 +1,93 @@
+Method references in Java Streams are a concise way to refer to methods or constructors as lambda expressions. They allow you to pass a reference to a method or constructor as an argument to a Stream operation, making your code more readable and expressive. Method references can be particularly useful when you're using functional interfaces like `Function`, `Predicate`, or `Consumer`.
+
+There are four types of method references in Java:
+
+1. **Reference to a static method**: References a static method of a class.
+
+2. **Reference to an instance method of a particular object**: References an instance method of a specific object.
+
+3. **Reference to an instance method of an arbitrary object of a particular type**: References an instance method of an unspecified object of a particular class or interface.
+
+4. **Reference to a constructor**: References a constructor of a class.
+
+Here's a breakdown of these method reference types with examples:
+
+**1. Reference to a static method**:
+
+You can reference a static method using the `ClassName::staticMethodName` syntax.
+
+```java
+import java.util.Arrays;
+import java.util.List;
+
+public class MethodReferenceExample {
+    public static void main(String[] args) {
+        List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+
+        // Using a lambda expression
+        names.forEach(name -> System.out.println(name.toUpperCase()));
+
+        // Using a method reference
+        names.forEach(String::toUpperCase);
+    }
+}
+```
+
+**2. Reference to an instance method of a particular object**:
+
+You can reference an instance method of a specific object using `object::instanceMethodName` syntax.
+
+```java
+import java.util.function.Predicate;
+
+public class MethodReferenceExample {
+    public static void main(String[] args) {
+        Predicate<String> startsWithA = s -> s.startsWith("A");
+        Predicate<String> refStartsWithA = "Alice"::startsWith;
+
+        System.out.println(startsWithA.test("Alice"));    // true
+        System.out.println(refStartsWithA.test("Alice")); // true
+    }
+}
+```
+
+**3. Reference to an instance method of an arbitrary object of a particular type**:
+
+You can reference an instance method of an unspecified object of a particular class or interface using `ClassName::instanceMethodName` syntax.
+
+```java
+import java.util.List;
+import java.util.function.Consumer;
+
+public class MethodReferenceExample {
+    public static void main(String[] args) {
+        List<String> names = List.of("Alice", "Bob", "Charlie");
+
+        // Using a lambda expression
+        names.forEach(name -> System.out.println(name.length()));
+
+        // Using a method reference
+        names.forEach(String::length);
+    }
+}
+```
+
+**4. Reference to a constructor**:
+
+You can reference a constructor using `ClassName::new` syntax.
+
+```java
+import java.util.function.Supplier;
+
+public class MethodReferenceExample {
+    public static void main(String[] args) {
+        // Using a lambda expression
+        Supplier<String> lambdaSupplier = () -> new String("Hello");
+
+        // Using a constructor reference
+        Supplier<String> constructorSupplier = String::new;
+    }
+}
+```
+
+Method references can make your code more readable and expressive by reducing the verbosity of lambda expressions, especially when you're working with functional interfaces that correspond to method signatures. They are a powerful feature introduced in Java to promote cleaner and more concise code.
